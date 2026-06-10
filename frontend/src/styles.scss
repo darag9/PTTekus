@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+
+// Custom theme configuration
+$tekus-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  typography: (
+    brand-family: 'Roboto, sans-serif',
+    plain-family: 'Roboto, sans-serif',
+  ),
+  density: (
+    scale: 0,
+  ),
+));
+
+// Apply the theme
+html {
+  @include mat.all-component-themes($tekus-theme);
+}
+
+// Global styles
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body {
+  background-color: #fafafa;
+}
