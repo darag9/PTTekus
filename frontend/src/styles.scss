@@ -1,33 +1,363 @@
 @use '@angular/material' as mat;
 
-// Custom theme configuration
+// ============================================================
+// TEKUS PREMIUM DARK THEME
+// Primary: Cyan/Teal (#00BCD4)
+// Accent: Violet (#7C4DFF)
+// Background: Dark grays (#121212, #1E1E2E, #2A2A3E)
+// Typography: Inter
+// ============================================================
+
 $tekus-theme: mat.define-theme((
   color: (
-    theme-type: light,
-    primary: mat.$azure-palette,
-    tertiary: mat.$blue-palette,
+    theme-type: dark,
+    primary: mat.$cyan-palette,
+    tertiary: mat.$violet-palette,
   ),
   typography: (
-    brand-family: 'Roboto, sans-serif',
-    plain-family: 'Roboto, sans-serif',
+    brand-family: 'Inter, sans-serif',
+    plain-family: 'Inter, sans-serif',
   ),
   density: (
     scale: 0,
   ),
 ));
 
-// Apply the theme
+// Apply the theme globally
 html {
   @include mat.all-component-themes($tekus-theme);
 }
 
-// Global styles
+// ============================================================
+// GLOBAL BASE STYLES
+// ============================================================
 html, body {
   height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-color: #fafafa;
+  background-color: #121212;
+  color: #E0E0E0;
+}
+
+a {
+  color: #00BCD4;
+  text-decoration: none;
+}
+
+// ============================================================
+// CUSTOM SCROLLBAR
+// ============================================================
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1E1E2E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3A3A4E;
+  border-radius: 3px;
+
+  &:hover {
+    background: #00BCD4;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3A3A4E #1E1E2E;
+}
+
+// ============================================================
+// GLASSMORPHISM CARD
+// ============================================================
+.glass-card {
+  background: rgba(30, 30, 46, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 188, 212, 0.15);
+  }
+}
+
+// ============================================================
+// ANIMATIONS
+// ============================================================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+// Stagger animation helper
+@for $i from 1 through 12 {
+  .animate-delay-#{$i} {
+    animation-delay: #{$i * 0.08}s;
+    opacity: 0;
+  }
+}
+
+// ============================================================
+// MAT-TABLE DARK STYLING
+// ============================================================
+.mat-mdc-table {
+  background: transparent !important;
+
+  .mat-mdc-header-row {
+    background: rgba(42, 42, 62, 0.8) !important;
+
+    .mat-mdc-header-cell {
+      color: #00BCD4 !important;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+  }
+
+  .mat-mdc-row {
+    background: rgba(30, 30, 46, 0.4) !important;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba(0, 188, 212, 0.08) !important;
+    }
+
+    .mat-mdc-cell {
+      color: #E0E0E0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+    }
+  }
+}
+
+// ============================================================
+// MAT-FORM-FIELD DARK STYLING
+// ============================================================
+.mat-mdc-form-field {
+  .mdc-text-field--filled {
+    background-color: rgba(42, 42, 62, 0.6) !important;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .mdc-floating-label {
+    color: rgba(224, 224, 224, 0.6) !important;
+  }
+
+  .mdc-text-field--focused .mdc-floating-label {
+    color: #00BCD4 !important;
+  }
+}
+
+// ============================================================
+// MAT-CARD DARK GLASSMORPHISM
+// ============================================================
+.mat-mdc-card {
+  background: rgba(30, 30, 46, 0.7) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  color: #E0E0E0;
+}
+
+// ============================================================
+// MAT-SNACKBAR CUSTOM COLORS
+// ============================================================
+.snackbar-success {
+  --mdc-snackbar-container-color: #1b5e20;
+  --mdc-snackbar-supporting-text-color: #fff;
+  --mat-snack-bar-button-color: #69f0ae;
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: #b71c1c;
+  --mdc-snackbar-supporting-text-color: #fff;
+  --mat-snack-bar-button-color: #ff8a80;
+}
+
+.snackbar-info {
+  --mdc-snackbar-container-color: #0d47a1;
+  --mdc-snackbar-supporting-text-color: #fff;
+  --mat-snack-bar-button-color: #82b1ff;
+}
+
+// ============================================================
+// MAT-PAGINATOR DARK STYLING
+// ============================================================
+.mat-mdc-paginator {
+  background: transparent !important;
+  color: #B0B0B0 !important;
+
+  .mat-mdc-paginator-container {
+    color: #B0B0B0;
+  }
+}
+
+// ============================================================
+// MAT-DIALOG DARK STYLING
+// ============================================================
+.mat-mdc-dialog-container {
+  .mdc-dialog__surface {
+    background: #1E1E2E !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+  }
+}
+
+// ============================================================
+// CUSTOM BUTTON STYLES
+// ============================================================
+.btn-gradient-primary {
+  background: linear-gradient(135deg, #00BCD4 0%, #00838F 100%) !important;
+  color: white !important;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #26C6DA 0%, #00ACC1 100%) !important;
+    box-shadow: 0 4px 20px rgba(0, 188, 212, 0.4);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+.btn-gradient-accent {
+  background: linear-gradient(135deg, #7C4DFF 0%, #651FFF 100%) !important;
+  color: white !important;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #B388FF 0%, #7C4DFF 100%) !important;
+    box-shadow: 0 4px 20px rgba(124, 77, 255, 0.4);
+    transform: translateY(-1px);
+  }
+}
+
+// ============================================================
+// FAB BUTTON
+// ============================================================
+.fab-bottom-right {
+  position: fixed !important;
+  bottom: 32px;
+  right: 32px;
+  z-index: 100;
+  background: linear-gradient(135deg, #00BCD4, #7C4DFF) !important;
+  color: white !important;
+  box-shadow: 0 6px 24px rgba(0, 188, 212, 0.4) !important;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 8px 32px rgba(0, 188, 212, 0.6) !important;
+  }
+}
+
+// ============================================================
+// UTILITY CLASSES
+// ============================================================
+.text-cyan { color: #00BCD4; }
+.text-violet { color: #7C4DFF; }
+.text-success { color: #69f0ae; }
+.text-error { color: #ff5252; }
+.text-muted { color: rgba(224, 224, 224, 0.5); }
+
+.page-container {
+  padding: 0;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #E0E0E0;
+  margin-bottom: 24px;
+
+  .highlight {
+    color: #00BCD4;
+  }
+}
+
+// Loading skeleton
+.skeleton {
+  background: linear-gradient(90deg, #2A2A3E 25%, #3A3A4E 50%, #2A2A3E 75%);
+  background-size: 200% 100%;
+  animation: gradientShift 1.5s infinite;
+  border-radius: 8px;
 }

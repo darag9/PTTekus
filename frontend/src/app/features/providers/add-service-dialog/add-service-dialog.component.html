@@ -1,0 +1,31 @@
+<h2 mat-dialog-title class="dialog-title">Add Service to Provider</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="service-form">
+    
+    <mat-form-field appearance="fill" class="w-100 mt-2">
+      <mat-label>Select Service</mat-label>
+      <mat-select formControlName="serviceId">
+        <mat-option *ngFor="let s of services" [value]="s.id">
+          {{ s.name }} (Base: {{ s.hourlyRate | currency }})
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('serviceId')?.hasError('required')">Service is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Custom Hourly Rate (Optional)</mat-label>
+      <input matInput type="number" formControlName="customHourlyRate" placeholder="Leave empty to use standard rate">
+      <mat-hint>Overrides standard rate</mat-hint>
+      <mat-error *ngIf="form.get('customHourlyRate')?.hasError('min')">Must be greater than or equal to 0</mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close [disabled]="loading">Cancel</button>
+  <button mat-raised-button class="btn-gradient-primary" (click)="onSubmit()" [disabled]="form.invalid || loading">
+    Add Service
+  </button>
+</mat-dialog-actions>

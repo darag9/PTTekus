@@ -1,0 +1,102 @@
+.header-actions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+
+  .back-btn {
+    color: #00BCD4;
+    background: rgba(0, 188, 212, 0.1);
+  }
+
+  .mb-0 {
+    margin-bottom: 0;
+  }
+  
+  .spacer {
+    flex: 1;
+  }
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.provider-info-card {
+  padding: 24px;
+
+  mat-card-title {
+    font-size: 1.2rem;
+    color: #E0E0E0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+  }
+
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .label {
+      font-size: 0.85rem;
+      color: #B0B0B0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .value {
+      font-size: 1.1rem;
+      color: #E0E0E0;
+      font-weight: 500;
+      word-break: break-all;
+    }
+  }
+}
+
+.services-card {
+  padding: 24px;
+
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+
+    mat-card-title {
+      font-size: 1.2rem;
+      color: #E0E0E0;
+      margin: 0;
+    }
+  }
+}
+
+.w-100 { width: 100%; }
+.mt-3 { margin-top: 16px; }
+.font-weight-bold { font-weight: 700; }
+.text-center { text-align: center; }
+.p-4 { padding: 2rem !important; }
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px;
+  color: #B0B0B0;
+  gap: 16px;
+}

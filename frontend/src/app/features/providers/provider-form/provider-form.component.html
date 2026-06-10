@@ -1,0 +1,46 @@
+<h2 mat-dialog-title class="dialog-title">{{ isEditMode ? 'Edit Provider' : 'Add New Provider' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="providerForm" class="provider-form">
+    
+    <mat-form-field appearance="fill" class="w-100 mt-2">
+      <mat-label>NIT</mat-label>
+      <input matInput formControlName="nit" placeholder="Enter NIT">
+      <mat-error *ngIf="providerForm.get('nit')?.hasError('required')">NIT is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Provider Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter name">
+      <mat-error *ngIf="providerForm.get('name')?.hasError('required')">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" placeholder="Enter email">
+      <mat-error *ngIf="providerForm.get('email')?.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="providerForm.get('email')?.hasError('email')">Invalid email format</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Website URL</mat-label>
+      <input matInput formControlName="websiteUrl" placeholder="https://www.example.com">
+      <mat-error *ngIf="providerForm.get('websiteUrl')?.hasError('required')">Website is required</mat-error>
+      <mat-error *ngIf="providerForm.get('websiteUrl')?.hasError('pattern')">Must start with http:// or https://</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Country</mat-label>
+      <input matInput formControlName="country" placeholder="Enter country">
+      <mat-error *ngIf="providerForm.get('country')?.hasError('required')">Country is required</mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close [disabled]="loading">Cancel</button>
+  <button mat-raised-button class="btn-gradient-primary" (click)="onSubmit()" [disabled]="providerForm.invalid || loading">
+    {{ isEditMode ? 'Update' : 'Create' }}
+  </button>
+</mat-dialog-actions>

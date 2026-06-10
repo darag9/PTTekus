@@ -1,0 +1,101 @@
+<div class="page-container" *ngIf="provider; else loader">
+  <div class="header-actions">
+    <button mat-icon-button routerLink="/providers" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="section-title mb-0">{{ provider.name }}</h1>
+    <div class="spacer"></div>
+  </div>
+
+  <div class="detail-grid">
+    <mat-card class="glass-card provider-info-card animate-slide-up">
+      <mat-card-header>
+        <mat-card-title>Provider Information</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="info-list">
+          <div class="info-item">
+            <span class="label">NIT</span>
+            <span class="value">{{ provider.nit }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Email</span>
+            <span class="value">{{ provider.email }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Website</span>
+            <span class="value"><a [href]="provider.websiteUrl" target="_blank">{{ provider.websiteUrl }}</a></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Country</span>
+            <span class="value">{{ provider.country }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Joined</span>
+            <span class="value">{{ provider.createdAt | date:'mediumDate' }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="glass-card services-card animate-slide-up animate-delay-2">
+      <mat-card-header class="services-header">
+        <mat-card-title>Services Provided</mat-card-title>
+        <button mat-raised-button class="btn-gradient-primary" (click)="openAddServiceDialog()">
+          <mat-icon>add</mat-icon> Add Service
+        </button>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <table mat-table [dataSource]="provider.services || []" class="w-100 mt-3">
+          
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Service </th>
+            <td mat-cell *matCellDef="let s"> {{s.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="hourlyRate">
+            <th mat-header-cell *matHeaderCellDef> Standard Rate </th>
+            <td mat-cell *matCellDef="let s"> {{s.hourlyRate | currency}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="customHourlyRate">
+            <th mat-header-cell *matHeaderCellDef> Custom Rate </th>
+            <td mat-cell *matCellDef="let s"> 
+              <span *ngIf="s.customHourlyRate">{{s.customHourlyRate | currency}}</span>
+              <span *ngIf="!s.customHourlyRate" class="text-muted">None</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="effectiveHourlyRate">
+            <th mat-header-cell *matHeaderCellDef> Effective Rate </th>
+            <td mat-cell *matCellDef="let s" class="text-cyan font-weight-bold"> {{s.effectiveHourlyRate | currency}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let s">
+              <button mat-icon-button class="text-error" (click)="removeService(s.serviceId)" matTooltip="Remove Service">
+                <mat-icon>remove_circle_outline</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell text-center p-4" colspan="5">This provider has no services yet.</td>
+          </tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #loader>
+  <div class="loading-state">
+    <mat-spinner diameter="48"></mat-spinner>
+    <p>Loading provider details...</p>
+  </div>
+</ng-template>
